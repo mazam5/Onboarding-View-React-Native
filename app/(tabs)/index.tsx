@@ -1,20 +1,36 @@
-import { Image } from "expo-image";
-import { Platform, StyleSheet } from "react-native";
+import { useState } from "react";
 
-import { HelloWave } from "@/components/hello-wave";
+import { Image } from "expo-image";
+import { StyleSheet } from "react-native";
+
+import { ExternalLink } from "@/components/external-link";
 import ParallaxScrollView from "@/components/parallax-scroll-view";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { API_DATA_1 } from "@/utils/TYPES";
-import { Link } from "expo-router";
-import { useEffect, useState } from "react";
-
+import { TYPE_API_DATA } from "@/utils/TYPES";
+// ! main bg-card #e191a5
 export default function HomeScreen() {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
-  const [data, setData] = useState<API_DATA_1 | null>(null);
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const [data, setData] = useState<TYPE_API_DATA | null>({
+    cause_and_effect: {
+      cause: "Mindful listening",
+      effect: "Improved communication skills",
+    },
+    citation: {
+      label: "Harvard Child Health",
+      url: "https://www.health.harvard.edu",
+    },
+    content:
+      "Regular playdates and group activities teach children empathy, cooperation, and conflict resolution through real experience.",
+    image_url:
+      "/images/processed_images_openai_paperboat/1863_Strengths_of_Having_Structure/69_0207cb9631_paperboat_1.jpg",
+    title: "Social Skills Need Practice",
+  });
+
+  // useEffect(() => {
+  //   fetchData();
+  //   console.log(data);
+  // }, []);
   const fetchData = async () => {
     try {
       const response = await fetch(`${apiUrl}/did_you_know`);
@@ -25,80 +41,70 @@ export default function HomeScreen() {
       console.log(error);
     }
   };
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
-          source={require("@/assets/images/partial-react-logo.png")}
+          source={
+            data?.image_url
+              ? { uri: `${apiUrl}${data.image_url}` }
+              : require("@/assets/images/partial-react-logo.png")
+          }
           style={styles.reactLogo}
         />
       }
     >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome World!</ThemedText>
-        <HelloWave />
-      </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          to see changes. Press{" "}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: "cmd + d",
-              android: "cmd + m",
-              web: "F12",
-            })}
-          </ThemedText>{" "}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction
-              title="Action"
-              icon="cube"
-              onPress={() => alert("Action pressed")}
-            />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert("Share pressed")}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert("Delete pressed")}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+        <ThemedText type="title">{data?.title}</ThemedText>
+        <ThemedView
+          style={{
+            flexDirection: "row",
+            borderRadius: 8, // use a number, not "px"
+            borderWidth: 1, // you need borderWidth for borderColor to show
+            borderColor: "white",
+            padding: 8, // spacing inside the box
+          }}
+        >
+          <ThemedText
+            style={{
+              color: "white",
+              backgroundColor: "#dc8ca5",
+              borderColor: "white",
+              borderWidth: 1,
+              padding: 6,
+              marginRight: 4, // spacing between cause & effect
+              borderRadius: 4,
+            }}
+          >
+            {data?.cause_and_effect.cause}
+          </ThemedText>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">
-            npm run reset-project
-          </ThemedText>{" "}
-          to get a fresh <ThemedText type="defaultSemiBold">app</ThemedText>{" "}
-          directory. This will move the current{" "}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{" "}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
+          <ThemedText
+            style={{
+              color: "white",
+              backgroundColor: "#dc8ca5",
+              borderColor: "white",
+              borderWidth: 1,
+              padding: 6,
+              borderRadius: 4,
+            }}
+          >
+            {data?.cause_and_effect.effect}
+          </ThemedText>
+        </ThemedView>
+
+        <ThemedText style={{ textAlign: "center" }}>{data?.content}</ThemedText>
+
+        {/* ✅ show external link if url exists */}
+        {data?.citation?.url ? (
+          <ExternalLink href={data.citation.url}>
+            <ThemedText style={{ textAlign: "center" }} type="link">
+              {data.citation.label}
+            </ThemedText>
+          </ExternalLink>
+        ) : null}
       </ThemedView>
     </ParallaxScrollView>
   );
@@ -106,6 +112,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   titleContainer: {
+    backgroundColor: "#cd6987",
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
@@ -115,8 +122,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   reactLogo: {
-    height: 178,
-    width: 290,
+    width: "100%",
+    height: "100%",
     bottom: 0,
     left: 0,
     position: "absolute",

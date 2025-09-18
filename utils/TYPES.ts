@@ -1,4 +1,4 @@
-export interface API_DATA_1 {
+export interface TYPE_API_DATA {
   cause_and_effect: {
     cause: string;
     effect: string;
