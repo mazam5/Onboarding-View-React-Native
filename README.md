@@ -1,50 +1,123 @@
-# Welcome to your Expo app 👋
+#  Onboarding Screens – React Native
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a React Native Expo app that demonstrates a simple onboarding flow with two screens:
 
-## Get started
+- Did You Know → Presents fun, educational facts with a cause & effect structure.
 
-1. Install dependencies
+- Flashcard → Displays flashcard-style content for quick learning.
 
-   ```bash
-   npm install
-   ```
+Both screens fetch their content from different API endpoints using Redux Toolkit and RTK Query for state management and data fetching.
 
-2. Start the app
+## Features
 
-   ```bash
-   npx expo start
-   ```
+- Onboarding flow with timed screen rotation
 
-In the output, you'll find options to open the app in a
+- Custom UI with typography, progress bar, and styled cards
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- API-powered content (via Redux Toolkit + RTK Query)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- Cross-platform support with Expo (Android, iOS, Web)
 
-## Get a fresh project
+- Loading, error, and retry states for smooth UX
 
-When you're ready, run:
+## Technologies
+
+- [React Native](https://reactnative.dev/)
+ – Cross-platform app development
+
+- [Expo](https://expo.dev/)
+ – Fast development and deployment
+
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+ – State management
+
+- [RTK Query](https://redux-toolkit.js.org/rtk-query/overview)
+ – API fetching & caching
+
+## Project Setup
+
+### - Prerequisites
+
+Before running the project, make sure you have:
+
+- [Node.js](https://nodejs.org/en/download/)
+
+- [npm](https://docs.npmjs.com/cli/install)
+ or [Yarn](https://yarnpkg.com/)
+
+- [Git](https://git-scm.com/)
+
+- [Android Studio](https://developer.android.com/studio/index.html) (for Android)
+
+- [Android Emulator](https://developer.android.com/studio/run/emulator-installation.html) (for Android)
+ (or physical device with Expo Go app)
+
+## Installation Steps
+
+1. Clone the repository
 
 ```bash
-npm run reset-project
+git clone https://github.com/mazam5/Onboarding-View-React-Native
+cd Onboarding-View-React-Native
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Install dependencies
 
-## Learn more
+```bash
+npm install
+```
+   - Set environment variables
 
-To learn more about developing your project with Expo, look at the following resources:
+   Create a .env file in the root directory and add:
+   ```
+   EXPO_PUBLIC_API_URL=your_api_url_here
+   ```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+3. Run the app
+```bash
+npm run android   # For Android
+npm run ios       # For iOS (macOS only)
+npm run web       # For web
+```
 
-## Join the community
+##  Troubleshooting
 
-Join our community of developers creating universal apps.
+If you encounter issues, run:
+```bash
+npx expo-doctor
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Screenshots & Demo
+<table>
+<tr>
+<th>
+<h3>
+Did you like screen (Home Page)
+</h3>
+</th>
+<th>
+<h3>
+Flashcard screen 
+</h3>
+</th>
+<th>
+<h3>
+Demo
+</h3>
+</th>
+</tr>
+<tr>
+<td>
+
+![Screenshot](/screenshots/1.png)
+</td>
+<td>
+
+![Screenshot](/screenshots/2.png)
+</td>
+<td>
+
+![Screenshot](/screenshots/demo.gif)
+</td>
+</tr>
+</table>
