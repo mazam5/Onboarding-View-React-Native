@@ -1,7 +1,6 @@
 import ProgressBar from "@/components/progress-bar";
-import { useApi } from "@/hooks/useApi";
+import { useGetScreen1DataQuery } from "@/store/services/screen";
 import { typography } from "@/styles/theme";
-import { TYPE_API_DATA } from "@/utils/TYPES";
 import {
   openBrowserAsync,
   WebBrowserPresentationStyle,
@@ -10,7 +9,7 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
-  const data = useApi<TYPE_API_DATA>("/did_you_know");
+  const { data } = useGetScreen1DataQuery();
 
   const handleOpenBrowser = async (url: string) => {
     if (process.env.EXPO_OS !== "web") {
@@ -69,6 +68,7 @@ export default function Index() {
           <View style={{ flex: 1, marginRight: 8 }}>
             <Text
               style={[
+                typography.regular,
                 {
                   color: "white",
                   backgroundColor: "#dc8ca5",
@@ -77,8 +77,8 @@ export default function Index() {
                   padding: 12,
                   borderRadius: 12,
                   textAlign: "center",
+                  fontSize: 16,
                 },
-                typography.regular,
               ]}
             >
               {data?.cause_and_effect?.cause}
@@ -92,6 +92,7 @@ export default function Index() {
           <View style={{ flex: 1, marginLeft: 8 }}>
             <Text
               style={[
+                typography.regular,
                 {
                   color: "white",
                   backgroundColor: "#dc8ca5",
@@ -100,8 +101,8 @@ export default function Index() {
                   padding: 12,
                   borderRadius: 12,
                   textAlign: "center",
+                  fontSize: 16,
                 },
-                typography.regular,
               ]}
             >
               {data?.cause_and_effect?.effect}
@@ -130,8 +131,10 @@ export default function Index() {
                   typography.regular,
                   {
                     color: "yellow",
+                    opacity: 0.9,
                     textAlign: "center",
                     textDecorationLine: "underline",
+                    fontSize: 16,
                   },
                 ]}
               >

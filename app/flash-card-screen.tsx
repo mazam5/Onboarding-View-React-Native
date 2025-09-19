@@ -1,12 +1,13 @@
 import ProgressBar from "@/components/progress-bar";
-import { useApi } from "@/hooks/useApi";
+import { useGetScreen2DataQuery } from "@/store/services/screen";
+// import { useApi } from "@/hooks/useApi";
 import { typography } from "@/styles/theme";
 import { API_URL } from "@/utils/config";
-import { TYPE_API_DATA } from "@/utils/TYPES";
 import { Image, StyleSheet, Text, View } from "react-native";
 
 const flash_card_screen = () => {
-  const data = useApi<TYPE_API_DATA>("/flashcard");
+  // const data = useApi<TYPE_API_DATA>("/flashcard");
+  const { data } = useGetScreen2DataQuery();
 
   return (
     <View

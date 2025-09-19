@@ -1,3 +1,4 @@
+import { store } from "@/store/store";
 import { Quicksand_300Light } from "@expo-google-fonts/quicksand/300Light";
 import { Quicksand_400Regular } from "@expo-google-fonts/quicksand/400Regular";
 import { Quicksand_500Medium } from "@expo-google-fonts/quicksand/500Medium";
@@ -8,6 +9,7 @@ import { Stack, usePathname, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { StyleSheet, useColorScheme } from "react-native";
+import { Provider } from "react-redux";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -38,7 +40,7 @@ export default function RootLayout() {
   if (!fontsLoaded) return null;
 
   return (
-    <>
+    <Provider store={store}>
       <Stack
         screenOptions={{
           headerTintColor: "white",
@@ -55,7 +57,7 @@ export default function RootLayout() {
         />
       </Stack>
       <StatusBar style="auto" />
-    </>
+    </Provider>
   );
 }
 
