@@ -1,13 +1,36 @@
+import LoadingScreen from "@/components/loading";
 import ProgressBar from "@/components/progress-bar";
 import { useGetScreen2DataQuery } from "@/store/services/screen";
-// import { useApi } from "@/hooks/useApi";
 import { typography } from "@/styles/theme";
 import { API_URL } from "@/utils/config";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Button, Image, StyleSheet, Text, View } from "react-native";
 
 const flash_card_screen = () => {
-  // const data = useApi<TYPE_API_DATA>("/flashcard");
-  const { data } = useGetScreen2DataQuery();
+  const { data, isLoading, isError, refetch } = useGetScreen2DataQuery();
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  if (isLoading) {
+    return <LoadingScreen bg="#051423" />;
+  }
+
+  if (isError) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#051423",
+        }}
+      >
+        <Text style={{ color: "red" }}>
+          Something went wrong. Please check your internet connection.
+        </Text>
+        <Button title="Retry" onPress={() => refetch()} />
+      </View>
+    );
+  }
 
   return (
     <View
@@ -16,7 +39,7 @@ const flash_card_screen = () => {
         backgroundColor: "#051423",
       }}
     >
-      <ProgressBar duration={5000} color="white" />
+      <ProgressBar duration={7000} color="white" />
       <Image
         style={{ width: "100%", height: "40%" }}
         source={
@@ -24,6 +47,7 @@ const flash_card_screen = () => {
             ? { uri: `${API_URL}${data.image_url}` }
             : require("@/assets/images/partial-react-logo.png")
         }
+        onLoadEnd={() => setImageLoaded(true)}
       />
       <View style={styles.container}>
         <View

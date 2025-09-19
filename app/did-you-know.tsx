@@ -5,12 +5,32 @@ import {
   openBrowserAsync,
   WebBrowserPresentationStyle,
 } from "expo-web-browser";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Button, Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
-  const { data } = useGetScreen1DataQuery();
+  const { data, isLoading, isError, error, refetch } = useGetScreen1DataQuery();
+  const [imageLoaded, setImageLoaded] = useState(false);
 
+  if (isError) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#230A0F",
+        }}
+      >
+        <Text style={{ color: "red", textAlign: "center" }}>
+          Failed to load data.
+          {JSON.stringify(error)}
+        </Text>
+        <Button title="Retry" onPress={() => refetch()} />
+      </View>
+    );
+  }
   const handleOpenBrowser = async (url: string) => {
     if (process.env.EXPO_OS !== "web") {
       await openBrowserAsync(url, {
@@ -25,7 +45,7 @@ export default function Index() {
         backgroundColor: "#230A0F",
       }}
     >
-      <ProgressBar duration={5000} color="white" />
+      <ProgressBar duration={7000} color="white" />
       <Image
         style={{ width: "100%", height: "40%" }}
         source={
@@ -33,6 +53,7 @@ export default function Index() {
             ? { uri: `${apiUrl}${data.image_url}` }
             : require("@/assets/images/partial-react-logo.png")
         }
+        onLoadEnd={() => setImageLoaded(true)}
       />
       <View style={styles.container}>
         <View

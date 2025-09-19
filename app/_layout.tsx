@@ -6,14 +6,11 @@ import { Quicksand_600SemiBold } from "@expo-google-fonts/quicksand/600SemiBold"
 import { Quicksand_700Bold } from "@expo-google-fonts/quicksand/700Bold";
 import { useFonts } from "@expo-google-fonts/quicksand/useFonts";
 import { Stack, usePathname, useRouter } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { StyleSheet, useColorScheme } from "react-native";
+import { StatusBar } from "react-native";
 import { Provider } from "react-redux";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   const router = useRouter();
   const pathname = usePathname();
 
@@ -32,7 +29,7 @@ export default function RootLayout() {
       } else {
         router.replace("/did-you-know");
       }
-    }, 5000);
+    }, 8000);
 
     return () => clearInterval(timer);
   }, [pathname]);
@@ -56,14 +53,7 @@ export default function RootLayout() {
           options={{ headerStyle: { backgroundColor: "#051423" } }}
         />
       </Stack>
-      <StatusBar style="auto" />
+      <StatusBar />
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  textTheme: {
-    color: "white",
-    fontFamily: "Quicksand_400Regular",
-  },
-});
