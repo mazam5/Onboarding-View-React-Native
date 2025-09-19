@@ -24,15 +24,15 @@ export default function RootLayout() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      if (pathname === "/did-you-know") {
+      if (pathname === "/") {
         router.replace("/flash-card-screen");
       } else {
-        router.replace("/did-you-know");
+        router.replace("/");
       }
     }, 8000);
 
     return () => clearInterval(timer);
-  }, [pathname]);
+  }, [pathname, router]);
 
   if (!fontsLoaded) return null;
 
@@ -45,7 +45,7 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen
-          name="did-you-know"
+          name="index"
           options={{ headerStyle: { backgroundColor: "#230A0F" } }}
         />
         <Stack.Screen

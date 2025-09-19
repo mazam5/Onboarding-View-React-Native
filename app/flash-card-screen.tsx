@@ -3,12 +3,10 @@ import ProgressBar from "@/components/progress-bar";
 import { useGetScreen2DataQuery } from "@/store/services/screen";
 import { typography } from "@/styles/theme";
 import { API_URL } from "@/utils/config";
-import { useState } from "react";
 import { Button, Image, StyleSheet, Text, View } from "react-native";
 
-const flash_card_screen = () => {
+const FlashCardScreen = () => {
   const { data, isLoading, isError, refetch } = useGetScreen2DataQuery();
-  const [imageLoaded, setImageLoaded] = useState(false);
 
   if (isLoading) {
     return <LoadingScreen bg="#051423" />;
@@ -47,7 +45,6 @@ const flash_card_screen = () => {
             ? { uri: `${API_URL}${data.image_url}` }
             : require("@/assets/images/partial-react-logo.png")
         }
-        onLoadEnd={() => setImageLoaded(true)}
       />
       <View style={styles.container}>
         <View
@@ -71,7 +68,7 @@ const flash_card_screen = () => {
     </View>
   );
 };
-export default flash_card_screen;
+export default FlashCardScreen;
 const styles = StyleSheet.create({
   container: {
     height: "60%",

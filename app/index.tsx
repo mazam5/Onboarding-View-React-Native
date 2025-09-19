@@ -1,3 +1,4 @@
+import LoadingScreen from "@/components/loading";
 import ProgressBar from "@/components/progress-bar";
 import { useGetScreen1DataQuery } from "@/store/services/screen";
 import { typography } from "@/styles/theme";
@@ -5,14 +6,15 @@ import {
   openBrowserAsync,
   WebBrowserPresentationStyle,
 } from "expo-web-browser";
-import { useState } from "react";
 import { Button, Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
   const { data, isLoading, isError, error, refetch } = useGetScreen1DataQuery();
-  const [imageLoaded, setImageLoaded] = useState(false);
 
+  if (isLoading) {
+    return <LoadingScreen bg="#230A0F" />;
+  }
   if (isError) {
     return (
       <View
@@ -53,7 +55,6 @@ export default function Index() {
             ? { uri: `${apiUrl}${data.image_url}` }
             : require("@/assets/images/partial-react-logo.png")
         }
-        onLoadEnd={() => setImageLoaded(true)}
       />
       <View style={styles.container}>
         <View
